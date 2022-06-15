@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <CopyLocalLockFileAssemblies>True</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+      <PackageReference Include="Terminal.Common" Version="1.0.0" />
+      <PackageReference Include="Terminal.SharedModels" Version="1.0.0" />
+      <PackageReference Include="Terminal.UI" Version="1.0.0" />
+    </ItemGroup>
+</Project>
+        
