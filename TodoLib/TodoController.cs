@@ -10,44 +10,55 @@ using JsonConverter = System.Text.Json.Serialization.JsonConverter;
 namespace TodoLib;
 
 [Utility("todo")]
-public class TodoController
+public class TodoController // Утилита
 {
+    #region constructor
+
     private ILogger _logger;
 
     private List<TodoItem> _todoItems;
 
-    
+
     public TodoController(ILogger logger)
     {
         _logger = logger;
         _todoItems = new();
     }
-    
+
+    #endregion
+
     [Command("test")]
     public void Test()
     {
         var assembly = Assembly.GetExecutingAssembly();
         _logger.Information(Directory.GetCurrentDirectory());
         _logger.Information(assembly.Location);
-    }
-    
+    } // Команда test
+
     [Command("add")]
     public void Add(DateTime dateTime, string message)
     {
         _todoItems.Add(new TodoItem()
         {
             Id = _todoItems.Count + 1,
-            Message = message, 
+            Message = message,
             DateTime = dateTime
         });
         _logger.Information($"Item added. Id = {_todoItems.Count}");
-    }
+    } // команда add
 
     [Command("find")]
     public void Find(int id)
     {
         var item = _todoItems.FirstOrDefault(x => x.Id == id);
         _logger.Information(item != null ? item.ToString() : "Todo item was not found");
+    } // команда 
+
+    [Command("showjson")]
+    public void ShowJson()
+    {
+        var json = JsonConvert.SerializeObject(_todoItems);
+        _logger.Information(json);
     }
 
     [Command("remove")]
@@ -68,13 +79,10 @@ public class TodoController
     public void List()
     {
         _logger.Information("---Todo items---");
-        _todoItems.ForEach(x =>
-        {
-            _logger.Information(x.ToString());
-        });
+        _todoItems.ForEach(x => { _logger.Information(x.ToString()); });
         _logger.Information("---end---");
     }
-    
+
     [Command("savejson")]
     public void Save(string fileName, DateTime dateTime)
     {
@@ -89,7 +97,7 @@ public class TodoController
         SaveToFile(fileName, _todoItems);
         _logger.Information("Collection saved");
     }
-    
+
     [Command("loadjson")]
     public void Load(string pathToFile)
     {
